@@ -66,3 +66,11 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+### How to update libraries through NPM
+
+1 npm install
+2 npm audit fix or npm audit -- for detailes --  to check libraries
+3 npm update --  updates in the current versions
+4 
+ 

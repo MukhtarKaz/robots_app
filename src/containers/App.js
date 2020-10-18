@@ -1,0 +1,51 @@
+import React, { Component } from "react";
+import Scroll from "../components/Scroll";
+import CardList from "../components/CardList";
+import SearchBox from "../components/SearchBox";
+import ErrorBoundary from "../components/ErrorBoundary";
+import "./App.css";
+
+class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      robots: [],
+      searchfield: ""
+    };
+  }
+
+  componentDidMount() {
+    fetch("https://jsonplaceholder.typicode.com/users")
+      .then(response => response.json())
+      .then(users => this.setState({ robots: users }));
+  }
+
+  onSearchChange = e => {
+    this.setState({ searchfield: e.target.value });
+  };
+  render() {
+    const filteredRobots = this.state.robots.filter(robot => {
+      return robot.name
+        .toLocaleLowerCase()
+        .includes(this.state.searchfield.toLowerCase());
+    });
+
+    if (this.state.robots.length === 0) {
+      return <h2 className="tc f2">Loading...</h2>;
+    } else {
+      return (
+        <div className="tc">
+          <h1 className="header f1">My Super Robots List</h1>
+          <SearchBox searchChange={this.onSearchChange} />
+          <Scroll>
+            <ErrorBoundary>
+              <CardList robots={filteredRobots} />
+            </ErrorBoundary>
+          </Scroll>
+        </div>
+      );
+    }
+  }
+}
+
+export default App;
